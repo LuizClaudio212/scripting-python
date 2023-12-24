@@ -22,6 +22,10 @@ from tkinter import *
 from tkinter.ttk import Combobox
 from tkinter import messagebox
 
+def limpar_formulario():
+    inputNavegador_nome.delete(0,END)
+    inputID_sigaa.delete(0,END)
+    inputSenha_sigaa.delete(0,END)
 
 def salvar_info():
     navegador_nome = inputNavegador_nome.get()
@@ -35,7 +39,7 @@ def salvar_info():
         arquivo.write(f'{navegador_nome},{sigaa_id},{sigaa_senha}')
 
     messagebox.showinfo(title="Sucesso", message="informações armazenadas no sistema!")
-
+    limpar_formulario()
     
 
 
@@ -95,6 +99,7 @@ def automacao():
 
         pyautogui.typewrite(info[2])
         pyautogui.press('enter')
+        messagebox.showinfo(title="Sucesso", message="Scripting foi realizado com êxito!")
     else:
         messagebox.showerror(title="Error", message="Imagem da caixa de senha não localizada")
         return
