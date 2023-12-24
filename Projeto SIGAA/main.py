@@ -1,3 +1,21 @@
+""" 
+Versão 1.0
+
+Código criado utilizando a biblioteca tkinter e pyautogui para automatizar o login e senha no site do SIGAA-IFAL.
+
+Nesta primeira versão, foi implementada a interface que pergunta ao usuário o nome do navegador que o mesmo utiliza, ID e senha que utiliza no SIGAA. Tudo é salvo em um arquivo.txt.
+
+Ao apertar no botão "Executar script de login no SIGAA", o script é executado!
+"""
+
+
+
+
+
+
+
+
+
 import pyautogui
 import os
 from tkinter import *
@@ -29,6 +47,7 @@ def automacao():
     # Caminho absoluto para a imagem
     image_path = os.path.join(current_dir, 'SENHAIMG.png')
 
+    
     #pausa de 2.0Sec a cada comando
     pyautogui.PAUSE = 2.0
 
@@ -42,7 +61,7 @@ def automacao():
         with open('infos.txt', 'r', encoding='utf-8') as arquivo:
             for linha in arquivo.readlines():
                 info = linha.split(',')
-                if len(info) == "":
+                if len(info) == 1:
                     messagebox.showerror(title="Error", message="Não existe nenhuma informação armazenada no sistema!")
                     return
 
@@ -60,8 +79,10 @@ def automacao():
     pyautogui.typewrite('https://sigaa.ifal.edu.br/sigaa/verTelaLogin.do')
     pyautogui.press('enter')
 
-    pyautogui.PAUSE = 1.0
+    pyautogui.PAUSE = 2.0
+    
     pyautogui.typewrite(info[1])
+    
 
     # Aguarda até que a imagem 'senha.png' seja encontrada na tela
     senha_img_localizar = pyautogui.locateOnScreen(image_path)
@@ -75,8 +96,8 @@ def automacao():
         pyautogui.typewrite(info[2])
         pyautogui.press('enter')
     else:
-        print("Imagem 'SENHAIMG.png' não encontrada na tela.")
-
+        messagebox.showerror(title="Error", message="Imagem da caixa de senha não localizada")
+        return
 
 
 
@@ -100,7 +121,7 @@ inputID_sigaa.pack()
 
 #perguntando senha do sigaa junto de tratamento de imagem
 
-vsenha = StringVar
+vsenha = StringVar()
 lblSenha_sigaa = Label(windows, text="Qual é sua senha no SIGAA?")
 lblSenha_sigaa.pack()
 inputSenha_sigaa = Entry(windows, textvariable=vsenha, show='*')
