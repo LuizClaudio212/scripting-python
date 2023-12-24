@@ -1,1 +1,1 @@
-# scripting-python
+# repository intended for codes involving automation using python
