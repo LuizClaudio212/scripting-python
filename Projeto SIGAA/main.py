@@ -22,11 +22,15 @@ from tkinter import *
 from tkinter.ttk import Combobox
 from tkinter import messagebox
 
+
+#limpar as caixas do formulário após salvar as info no sistema.
 def limpar_formulario():
     inputNavegador_nome.delete(0,END)
     inputID_sigaa.delete(0,END)
     inputSenha_sigaa.delete(0,END)
 
+
+#salvar as info no sistema e tratar erros.
 def salvar_info():
     navegador_nome = inputNavegador_nome.get()
     sigaa_id = inputID_sigaa.get()
@@ -43,13 +47,13 @@ def salvar_info():
     
 
 
-
+#script de login no SIGAA
 def automacao():
     # Obtenha o caminho absoluto do diretório atual
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Caminho absoluto para a imagem
-    image_path = os.path.join(current_dir, 'SENHAIMG.png')
+    usuario_path = os.path.join(current_dir, 'procurarcaixadeid.png')
 
     
     #pausa de 2.0Sec a cada comando
@@ -62,6 +66,7 @@ def automacao():
    
     #scipt principal
     try: 
+        #ler as informações armazenadas no sistema e tratar o erro de tentar executar o script sem ter nada armazenado no sistema
         with open('infos.txt', 'r', encoding='utf-8') as arquivo:
             for linha in arquivo.readlines():
                 info = linha.split(',')
@@ -73,35 +78,46 @@ def automacao():
         messagebox.showerror(title="Error", message="Não existe nenhuma informação armazenada no sistema!")
         return
     
+    #Fazer com que o computador tecle "Win" para pesquisar o nome do navegador e pressionar a tecla "Enter"
     pyautogui.press('win')
     pyautogui.typewrite(info[0])
     pyautogui.press('enter')
 
-
+    #Entrar no navegador em modo anônimo colocar a URL do SIGAA modo classico e pressionar a tecla "Enter"
     pyautogui.hotkey('ctrl', 'Shift', 'n')
     pyautogui.PAUSE = 1.0
     pyautogui.typewrite('https://sigaa.ifal.edu.br/sigaa/verTelaLogin.do')
     pyautogui.press('enter')
 
+    #aumentei um segundo porque alguns computadores sao mais lentos.
     pyautogui.PAUSE = 2.0
     
-    pyautogui.typewrite(info[1])
-    
 
-    # Aguarda até que a imagem 'senha.png' seja encontrada na tela
-    senha_img_localizar = pyautogui.locateOnScreen(image_path)
+    # Aguarda até que a imagem 'procurarcaixadeid.png' seja encontrada na tela
+    usuario_img_localizar = pyautogui.locateOnScreen(usuario_path)
 
-    if senha_img_localizar:
+    if usuario_img_localizar:
         # Obtém as coordenadas do centro da imagem encontrada
-        x, y = pyautogui.center(senha_img_localizar)
-        # Clica nas coordenadas do centro da imagem
-        pyautogui.click(x+35, y)
+        x, y = pyautogui.center(usuario_img_localizar)
 
+        # Clica nas coordenadas do centro da imagem, fiz alterações pois procurei o botao de "Entrar" da pagina e com base nela achei a caixa de ID.
+        pyautogui.click(x+50, y-70)
+
+        #escrever o ID
+        pyautogui.typewrite(info[1])
+
+        #pressionar "Tab" para acessar a caixa de senha da pagina do SIGAA.
+        pyautogui.press('tab')
+
+        #escrever a senha
         pyautogui.typewrite(info[2])
+
+        #pressionar enter
         pyautogui.press('enter')
+
         messagebox.showinfo(title="Sucesso", message="Scripting foi realizado com êxito!")
     else:
-        messagebox.showerror(title="Error", message="Imagem da caixa de senha não localizada")
+        messagebox.showerror(title="Error", message="Imagem da caixa de ID não localizada")
         return
 
 
