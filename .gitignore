@@ -1,0 +1,38 @@
+# ⛔ Ignora cache do Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# 📦 Ignora dependências ou pacotes locais
+*.egg-info/
+*.egg
+dist/
+build/
+
+# 🧪 Arquivos de testes temporários
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 🔐 Informações sensíveis
+infos.txt
+.env
+*.env
+
+# 💻 Arquivos de IDEs e editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# 📝 Logs
+*.log
+
+# 📁 Dados ou arquivos de uso temporário
+*.bak
+*.tmp
+*.swp
+
+# 🚫 Ignore arquivos do sistema operacional
+.DS_Store
+Thumbs.db
