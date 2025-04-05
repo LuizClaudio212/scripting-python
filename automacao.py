@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 
 def login_sigaa(usuario, senha):
@@ -11,7 +12,7 @@ def login_sigaa(usuario, senha):
         options.add_experimental_option("excludeSwitches", ["enable-automation"])
         options.add_experimental_option('useAutomationExtension', False)
 
-        service = Service(executable_path=r"C:\Windows\chromedriver.exe")
+        service = Service(ChromeDriverManager().install())
         driver = webdriver.Chrome(service=service, options=options)
         driver.get("https://sigaa.ifal.edu.br/sigaa/verTelaLogin.do")
         driver.maximize_window()
