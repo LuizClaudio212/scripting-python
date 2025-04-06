@@ -1,2 +1,3 @@
 # Requisitos para rodar o projeto Login Automático SIGAA
 selenium==4.31.0
+webdriver-manager==4.0.2
